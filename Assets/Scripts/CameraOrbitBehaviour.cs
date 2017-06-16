@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-[AddComponentMenu("Camera-Control/Mouse Orbit with zoom")]
-public class MouseOrbitImproved : MonoBehaviour
-{
+public class CameraOrbitBehaviour : MonoBehaviour {
     public Transform tank;
     public Transform target;
 
@@ -19,7 +18,7 @@ public class MouseOrbitImproved : MonoBehaviour
 
     float x = 0.0f;
     float y = 0.0f;
-    
+
     void Start()
     {
         Vector3 angles = transform.eulerAngles;
@@ -37,7 +36,7 @@ public class MouseOrbitImproved : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("ZoomInMouse"))
+        if (Input.GetButtonDown("ZoomIn"))
         {
             if (!zoomed)
             {
@@ -52,12 +51,12 @@ public class MouseOrbitImproved : MonoBehaviour
         }
 
         xMaxLimit = tank.rotation.eulerAngles.y + 20f;
-        xMinLimit = tank.rotation.eulerAngles.y - 20f;        
+        xMinLimit = tank.rotation.eulerAngles.y - 20f;
 
         if (target)
         {
-            x += Input.GetAxis("TankxMouse");
-            y -= Input.GetAxis("TankyMouse");
+            x += Input.GetAxis("Tankx");
+            y -= Input.GetAxis("Tanky");
 
             x = ClampAngle(x, xMinLimit, xMaxLimit);
             y = ClampAngle(y, yMinLimit, yMaxLimit);

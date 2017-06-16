@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CombatSceneButtonBehaviour : MonoBehaviour
+public class CombatSceneBehaviour : MonoBehaviour
 {
+    public TankBehaviour player;
     public Canvas pauseMenu;
     public Canvas controls;
+    public Canvas gameover;
     private bool paused;
 
     public void onResumeClicked()
@@ -37,12 +39,29 @@ public class CombatSceneButtonBehaviour : MonoBehaviour
         GameState.Instance.QuitGame();
     }
 
+    public void onRematchClicked()
+    {
+        GameState.Instance.RestartScene();         
+    }
+
+    public void onGameOver(string n)
+    {        
+        gameover.enabled = true;
+        GameState.Instance.PauseGame();
+    }
+
+    private void Awake()
+    {
+        TankBehaviour.onTankDeath.AddListener(onGameOver);
+    }
+
     void Start()
     {
         GameState.Instance.UnpauseGame();
         paused = false;
         pauseMenu.enabled = false;
         controls.enabled = false;
+        gameover.enabled = false;
     }
 
     void Update()
